@@ -1,0 +1,708 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище DiplomaModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Authorization">
+          <Key>
+            <PropertyRef Name="ID_Auth" />
+          </Key>
+          <Property Name="ID_Auth" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ID_client" />
+          </Key>
+          <Property Name="ID_client" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Mail" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="ID_document" />
+          </Key>
+          <Property Name="ID_document" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="NotaryID" Type="int" />
+          <Property Name="PriceID" Type="int" />
+          <Property Name="Services" Type="int" />
+        </EntityType>
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="ID_expenses" />
+          </Key>
+          <Property Name="ID_expenses" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date_expenses" Type="date" />
+          <Property Name="Sum" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Finance">
+          <Key>
+            <PropertyRef Name="ID_finance" />
+          </Key>
+          <Property Name="ID_finance" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type_of_OperationID" Type="int" />
+          <Property Name="Sum" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentID" Type="int" />
+          <Property Name="ExpensesID" Type="int" />
+        </EntityType>
+        <EntityType Name="Notaries">
+          <Key>
+            <PropertyRef Name="ID_notary" />
+          </Key>
+          <Property Name="ID_notary" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="First_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Last_name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Date_beginning_of_work" Type="date" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="ID_payments" />
+          </Key>
+          <Property Name="ID_payments" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date_payments" Type="date" />
+          <Property Name="Sum" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+          <Property Name="ServicesID" Type="int" />
+        </EntityType>
+        <EntityType Name="Price_list">
+          <Key>
+            <PropertyRef Name="ID_price" />
+          </Key>
+          <Property Name="ID_price" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type_documentID" Type="int" />
+          <Property Name="Sum" Type="decimal" Precision="18" Scale="2" />
+        </EntityType>
+        <EntityType Name="Services_client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ClientID" Type="int" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Type_documents">
+          <Key>
+            <PropertyRef Name="ID_type" />
+          </Key>
+          <Property Name="ID_type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type_name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Type_of_operation">
+          <Key>
+            <PropertyRef Name="ID_type" />
+          </Key>
+          <Property Name="ID_type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Operation" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Documents_Notaries">
+          <End Role="Notaries" Type="Self.Notaries" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notaries">
+              <PropertyRef Name="ID_notary" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="NotaryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Price_list">
+          <End Role="Price_list" Type="Self.Price_list" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Price_list">
+              <PropertyRef Name="ID_price" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="PriceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Services_client">
+          <End Role="Services_client" Type="Self.Services_client" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services_client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="Services" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Finance_Expenses">
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="0..1" />
+          <End Role="Finance" Type="Self.Finance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Expenses">
+              <PropertyRef Name="ID_expenses" />
+            </Principal>
+            <Dependent Role="Finance">
+              <PropertyRef Name="ExpensesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Finance_Payments">
+          <End Role="Payments" Type="Self.Payments" Multiplicity="0..1" />
+          <End Role="Finance" Type="Self.Finance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payments">
+              <PropertyRef Name="ID_payments" />
+            </Principal>
+            <Dependent Role="Finance">
+              <PropertyRef Name="PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Finance_Type_of_operation">
+          <End Role="Type_of_operation" Type="Self.Type_of_operation" Multiplicity="0..1" />
+          <End Role="Finance" Type="Self.Finance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_of_operation">
+              <PropertyRef Name="ID_type" />
+            </Principal>
+            <Dependent Role="Finance">
+              <PropertyRef Name="Type_of_OperationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Services_client">
+          <End Role="Services_client" Type="Self.Services_client" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services_client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="ServicesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Price_list_Type_documents">
+          <End Role="Type_documents" Type="Self.Type_documents" Multiplicity="0..1" />
+          <End Role="Price_list" Type="Self.Price_list" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_documents">
+              <PropertyRef Name="ID_type" />
+            </Principal>
+            <Dependent Role="Price_list">
+              <PropertyRef Name="Type_documentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Services_client_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Services_client" Type="Self.Services_client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ID_client" />
+            </Principal>
+            <Dependent Role="Services_client">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище DiplomaModelContainer">
+          <EntitySet Name="Authorization" EntityType="Self.Authorization" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Finance" EntityType="Self.Finance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notaries" EntityType="Self.Notaries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Price_list" EntityType="Self.Price_list" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Services_client" EntityType="Self.Services_client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type_documents" EntityType="Self.Type_documents" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Type_of_operation" EntityType="Self.Type_of_operation" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Documents_Notaries" Association="Self.FK_Documents_Notaries">
+            <End Role="Notaries" EntitySet="Notaries" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Price_list" Association="Self.FK_Documents_Price_list">
+            <End Role="Price_list" EntitySet="Price_list" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Services_client" Association="Self.FK_Documents_Services_client">
+            <End Role="Services_client" EntitySet="Services_client" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finance_Expenses" Association="Self.FK_Finance_Expenses">
+            <End Role="Expenses" EntitySet="Expenses" />
+            <End Role="Finance" EntitySet="Finance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finance_Payments" Association="Self.FK_Finance_Payments">
+            <End Role="Payments" EntitySet="Payments" />
+            <End Role="Finance" EntitySet="Finance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finance_Type_of_operation" Association="Self.FK_Finance_Type_of_operation">
+            <End Role="Type_of_operation" EntitySet="Type_of_operation" />
+            <End Role="Finance" EntitySet="Finance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Services_client" Association="Self.FK_Payments_Services_client">
+            <End Role="Services_client" EntitySet="Services_client" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Price_list_Type_documents" Association="Self.FK_Price_list_Type_documents">
+            <End Role="Type_documents" EntitySet="Type_documents" />
+            <End Role="Price_list" EntitySet="Price_list" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Services_client_Clients" Association="Self.FK_Services_client_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Services_client" EntitySet="Services_client" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DiplomaModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Authorization">
+          <Key>
+            <PropertyRef Name="ID_Auth" />
+          </Key>
+          <Property Name="ID_Auth" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="ID_client" />
+          </Key>
+          <Property Name="ID_client" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Mail" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Services_client" Relationship="Self.FK_Services_client_Clients" FromRole="Clients" ToRole="Services_client" />
+        </EntityType>
+        <EntityType Name="Documents">
+          <Key>
+            <PropertyRef Name="ID_document" />
+          </Key>
+          <Property Name="ID_document" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="NotaryID" Type="Int32" />
+          <Property Name="PriceID" Type="Int32" />
+          <Property Name="Services" Type="Int32" />
+          <NavigationProperty Name="Notaries" Relationship="Self.FK_Documents_Notaries" FromRole="Documents" ToRole="Notaries" />
+          <NavigationProperty Name="Price_list" Relationship="Self.FK_Documents_Price_list" FromRole="Documents" ToRole="Price_list" />
+          <NavigationProperty Name="Services_client" Relationship="Self.FK_Documents_Services_client" FromRole="Documents" ToRole="Services_client" />
+        </EntityType>
+        <EntityType Name="Expenses">
+          <Key>
+            <PropertyRef Name="ID_expenses" />
+          </Key>
+          <Property Name="ID_expenses" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date_expenses" Type="DateTime" Precision="0" />
+          <Property Name="Sum" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Finance" Relationship="Self.FK_Finance_Expenses" FromRole="Expenses" ToRole="Finance" />
+        </EntityType>
+        <EntityType Name="Finance">
+          <Key>
+            <PropertyRef Name="ID_finance" />
+          </Key>
+          <Property Name="ID_finance" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type_of_OperationID" Type="Int32" />
+          <Property Name="Sum" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="PaymentID" Type="Int32" />
+          <Property Name="ExpensesID" Type="Int32" />
+          <NavigationProperty Name="Expenses" Relationship="Self.FK_Finance_Expenses" FromRole="Finance" ToRole="Expenses" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Finance_Payments" FromRole="Finance" ToRole="Payments" />
+          <NavigationProperty Name="Type_of_operation" Relationship="Self.FK_Finance_Type_of_operation" FromRole="Finance" ToRole="Type_of_operation" />
+        </EntityType>
+        <EntityType Name="Notaries">
+          <Key>
+            <PropertyRef Name="ID_notary" />
+          </Key>
+          <Property Name="ID_notary" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="First_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Date_beginning_of_work" Type="DateTime" Precision="0" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Documents" Relationship="Self.FK_Documents_Notaries" FromRole="Notaries" ToRole="Documents" />
+        </EntityType>
+        <EntityType Name="Payments">
+          <Key>
+            <PropertyRef Name="ID_payments" />
+          </Key>
+          <Property Name="ID_payments" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date_payments" Type="DateTime" Precision="0" />
+          <Property Name="Sum" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ServicesID" Type="Int32" />
+          <NavigationProperty Name="Finance" Relationship="Self.FK_Finance_Payments" FromRole="Payments" ToRole="Finance" />
+          <NavigationProperty Name="Services_client" Relationship="Self.FK_Payments_Services_client" FromRole="Payments" ToRole="Services_client" />
+        </EntityType>
+        <EntityType Name="Price_list">
+          <Key>
+            <PropertyRef Name="ID_price" />
+          </Key>
+          <Property Name="ID_price" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type_documentID" Type="Int32" />
+          <Property Name="Sum" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="Documents" Relationship="Self.FK_Documents_Price_list" FromRole="Price_list" ToRole="Documents" />
+          <NavigationProperty Name="Type_documents" Relationship="Self.FK_Price_list_Type_documents" FromRole="Price_list" ToRole="Type_documents" />
+        </EntityType>
+        <EntityType Name="Services_client">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ClientID" Type="Int32" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Services_client_Clients" FromRole="Services_client" ToRole="Clients" />
+          <NavigationProperty Name="Documents" Relationship="Self.FK_Documents_Services_client" FromRole="Services_client" ToRole="Documents" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK_Payments_Services_client" FromRole="Services_client" ToRole="Payments" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Type_documents">
+          <Key>
+            <PropertyRef Name="ID_type" />
+          </Key>
+          <Property Name="ID_type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type_name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Price_list" Relationship="Self.FK_Price_list_Type_documents" FromRole="Type_documents" ToRole="Price_list" />
+        </EntityType>
+        <EntityType Name="Type_of_operation">
+          <Key>
+            <PropertyRef Name="ID_type" />
+          </Key>
+          <Property Name="ID_type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Operation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Finance" Relationship="Self.FK_Finance_Type_of_operation" FromRole="Type_of_operation" ToRole="Finance" />
+        </EntityType>
+        <Association Name="FK_Services_client_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="0..1" />
+          <End Role="Services_client" Type="Self.Services_client" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="ID_client" />
+            </Principal>
+            <Dependent Role="Services_client">
+              <PropertyRef Name="ClientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Notaries">
+          <End Role="Notaries" Type="Self.Notaries" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Notaries">
+              <PropertyRef Name="ID_notary" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="NotaryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Price_list">
+          <End Role="Price_list" Type="Self.Price_list" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Price_list">
+              <PropertyRef Name="ID_price" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="PriceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documents_Services_client">
+          <End Role="Services_client" Type="Self.Services_client" Multiplicity="0..1" />
+          <End Role="Documents" Type="Self.Documents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services_client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Documents">
+              <PropertyRef Name="Services" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Finance_Expenses">
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="0..1" />
+          <End Role="Finance" Type="Self.Finance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Expenses">
+              <PropertyRef Name="ID_expenses" />
+            </Principal>
+            <Dependent Role="Finance">
+              <PropertyRef Name="ExpensesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Finance_Payments">
+          <End Role="Payments" Type="Self.Payments" Multiplicity="0..1" />
+          <End Role="Finance" Type="Self.Finance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Payments">
+              <PropertyRef Name="ID_payments" />
+            </Principal>
+            <Dependent Role="Finance">
+              <PropertyRef Name="PaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Finance_Type_of_operation">
+          <End Role="Type_of_operation" Type="Self.Type_of_operation" Multiplicity="0..1" />
+          <End Role="Finance" Type="Self.Finance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_of_operation">
+              <PropertyRef Name="ID_type" />
+            </Principal>
+            <Dependent Role="Finance">
+              <PropertyRef Name="Type_of_OperationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payments_Services_client">
+          <End Role="Services_client" Type="Self.Services_client" Multiplicity="0..1" />
+          <End Role="Payments" Type="Self.Payments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Services_client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Payments">
+              <PropertyRef Name="ServicesID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Price_list_Type_documents">
+          <End Role="Type_documents" Type="Self.Type_documents" Multiplicity="0..1" />
+          <End Role="Price_list" Type="Self.Price_list" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type_documents">
+              <PropertyRef Name="ID_type" />
+            </Principal>
+            <Dependent Role="Price_list">
+              <PropertyRef Name="Type_documentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DiplomaEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authorization" EntityType="Self.Authorization" />
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Documents" EntityType="Self.Documents" />
+          <EntitySet Name="Expenses" EntityType="Self.Expenses" />
+          <EntitySet Name="Finance" EntityType="Self.Finance" />
+          <EntitySet Name="Notaries" EntityType="Self.Notaries" />
+          <EntitySet Name="Payments" EntityType="Self.Payments" />
+          <EntitySet Name="Price_list" EntityType="Self.Price_list" />
+          <EntitySet Name="Services_client" EntityType="Self.Services_client" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <EntitySet Name="Type_documents" EntityType="Self.Type_documents" />
+          <EntitySet Name="Type_of_operation" EntityType="Self.Type_of_operation" />
+          <AssociationSet Name="FK_Services_client_Clients" Association="Self.FK_Services_client_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Services_client" EntitySet="Services_client" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Notaries" Association="Self.FK_Documents_Notaries">
+            <End Role="Notaries" EntitySet="Notaries" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Price_list" Association="Self.FK_Documents_Price_list">
+            <End Role="Price_list" EntitySet="Price_list" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documents_Services_client" Association="Self.FK_Documents_Services_client">
+            <End Role="Services_client" EntitySet="Services_client" />
+            <End Role="Documents" EntitySet="Documents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finance_Expenses" Association="Self.FK_Finance_Expenses">
+            <End Role="Expenses" EntitySet="Expenses" />
+            <End Role="Finance" EntitySet="Finance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finance_Payments" Association="Self.FK_Finance_Payments">
+            <End Role="Payments" EntitySet="Payments" />
+            <End Role="Finance" EntitySet="Finance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finance_Type_of_operation" Association="Self.FK_Finance_Type_of_operation">
+            <End Role="Type_of_operation" EntitySet="Type_of_operation" />
+            <End Role="Finance" EntitySet="Finance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payments_Services_client" Association="Self.FK_Payments_Services_client">
+            <End Role="Services_client" EntitySet="Services_client" />
+            <End Role="Payments" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Price_list_Type_documents" Association="Self.FK_Price_list_Type_documents">
+            <End Role="Type_documents" EntitySet="Type_documents" />
+            <End Role="Price_list" EntitySet="Price_list" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище DiplomaModelContainer" CdmEntityContainer="DiplomaEntities">
+          <EntitySetMapping Name="Authorization">
+            <EntityTypeMapping TypeName="DiplomaModel.Authorization">
+              <MappingFragment StoreEntitySet="Authorization">
+                <ScalarProperty Name="ID_Auth" ColumnName="ID_Auth" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="DiplomaModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="ID_client" ColumnName="ID_client" />
+                <ScalarProperty Name="First_name" ColumnName="First_name" />
+                <ScalarProperty Name="Last_name" ColumnName="Last_name" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Mail" ColumnName="Mail" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documents">
+            <EntityTypeMapping TypeName="DiplomaModel.Documents">
+              <MappingFragment StoreEntitySet="Documents">
+                <ScalarProperty Name="ID_document" ColumnName="ID_document" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="NotaryID" ColumnName="NotaryID" />
+                <ScalarProperty Name="PriceID" ColumnName="PriceID" />
+                <ScalarProperty Name="Services" ColumnName="Services" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Expenses">
+            <EntityTypeMapping TypeName="DiplomaModel.Expenses">
+              <MappingFragment StoreEntitySet="Expenses">
+                <ScalarProperty Name="ID_expenses" ColumnName="ID_expenses" />
+                <ScalarProperty Name="Date_expenses" ColumnName="Date_expenses" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Finance">
+            <EntityTypeMapping TypeName="DiplomaModel.Finance">
+              <MappingFragment StoreEntitySet="Finance">
+                <ScalarProperty Name="ID_finance" ColumnName="ID_finance" />
+                <ScalarProperty Name="Type_of_OperationID" ColumnName="Type_of_OperationID" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="ExpensesID" ColumnName="ExpensesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Notaries">
+            <EntityTypeMapping TypeName="DiplomaModel.Notaries">
+              <MappingFragment StoreEntitySet="Notaries">
+                <ScalarProperty Name="ID_notary" ColumnName="ID_notary" />
+                <ScalarProperty Name="First_name" ColumnName="First_name" />
+                <ScalarProperty Name="Last_name" ColumnName="Last_name" />
+                <ScalarProperty Name="Date_beginning_of_work" ColumnName="Date_beginning_of_work" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="DiplomaModel.Payments">
+              <MappingFragment StoreEntitySet="Payments">
+                <ScalarProperty Name="ID_payments" ColumnName="ID_payments" />
+                <ScalarProperty Name="Date_payments" ColumnName="Date_payments" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="ServicesID" ColumnName="ServicesID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Price_list">
+            <EntityTypeMapping TypeName="DiplomaModel.Price_list">
+              <MappingFragment StoreEntitySet="Price_list">
+                <ScalarProperty Name="ID_price" ColumnName="ID_price" />
+                <ScalarProperty Name="Type_documentID" ColumnName="Type_documentID" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Services_client">
+            <EntityTypeMapping TypeName="DiplomaModel.Services_client">
+              <MappingFragment StoreEntitySet="Services_client">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ClientID" ColumnName="ClientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="DiplomaModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_documents">
+            <EntityTypeMapping TypeName="DiplomaModel.Type_documents">
+              <MappingFragment StoreEntitySet="Type_documents">
+                <ScalarProperty Name="ID_type" ColumnName="ID_type" />
+                <ScalarProperty Name="Type_name" ColumnName="Type_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Type_of_operation">
+            <EntityTypeMapping TypeName="DiplomaModel.Type_of_operation">
+              <MappingFragment StoreEntitySet="Type_of_operation">
+                <ScalarProperty Name="ID_type" ColumnName="ID_type" />
+                <ScalarProperty Name="Operation" ColumnName="Operation" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

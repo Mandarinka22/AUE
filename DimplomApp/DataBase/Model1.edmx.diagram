@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="67853597e217476ba77a7daa2eece1b0" Name="Diagram1">
+        <EntityTypeShape EntityType="DiplomaModel.Authorization" Width="1.5" PointX="7.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Clients" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Documents" Width="1.5" PointX="5.25" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Expenses" Width="1.5" PointX="5.25" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Finance" Width="1.5" PointX="7.5" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Notaries" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Payments" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Price_list" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Services_client" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.sysdiagrams" Width="1.5" PointX="9.75" PointY="1.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Type_documents" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DiplomaModel.Type_of_operation" Width="1.5" PointX="5.25" PointY="14.25" IsExpanded="true" />
+        <AssociationConnector Association="DiplomaModel.FK_Services_client_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaModel.FK_Documents_Notaries" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaModel.FK_Documents_Price_list" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaModel.FK_Documents_Services_client" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaModel.FK_Finance_Expenses" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaModel.FK_Finance_Payments" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaModel.FK_Finance_Type_of_operation" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaModel.FK_Payments_Services_client" ManuallyRouted="false" />
+        <AssociationConnector Association="DiplomaModel.FK_Price_list_Type_documents" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
