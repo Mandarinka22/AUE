@@ -1,6 +1,7 @@
 ﻿using DimplomApp.DataBase;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace DimplomApp.WindowsProject
 {
@@ -70,34 +72,32 @@ namespace DimplomApp.WindowsProject
                 .OrderByDescending(finance => finance.Date) // Сортировка по убыванию даты
                 .ToList().AsQueryable();
 
-            // Обновление суммы в таблице Expenses
             foreach (var financeItem in TB.Where(item => item.Type_of_OperationID == 2))
             {
                 var expense = DB.Expenses.FirstOrDefault(e => e.ID_expenses == financeItem.ExpensesID);
                 if (expense != null)
                 {
                     expense.Sum = financeItem.Sum;
+                    DB.Entry(expense).State = EntityState.Modified; // Пометить объект как измененный
                 }
             }
 
-            // Обновление суммы в таблице Payments
             foreach (var financeItem in TB.Where(item => item.Type_of_OperationID == 1))
             {
                 var payment = DB.Payments.FirstOrDefault(p => p.ID_payments == financeItem.PaymentID);
                 if (payment != null)
                 {
                     payment.Sum = financeItem.Sum;
+                    DB.Entry(payment).State = EntityState.Modified; // Пометить объект как измененный
                 }
             }
-
             // Сохранение изменений в базе данных
             DB.SaveChanges();
-
             // Заполнение DataGrid данными из списка Finance
             FinanceGrid.ItemsSource = TB.ToList();
 
             // Выполнение пересчета и обновление сумм
-            UpdateSummary();
+            UpdateSummary(); 
         }
 
         private void UpdateSummary()
@@ -145,6 +145,19 @@ namespace DimplomApp.WindowsProject
             {
                 FinanceGrid.ItemsSource = null;
             }
+        }
+
+        private void ClearDatePicker_Click(object sender, RoutedEventArgs e)
+        {
+            // Сброс выбранных дат в DatePicker
+            StartDatePicker.SelectedDate = null;
+            EndDatePicker.SelectedDate = null;
+
+            // Очистка фильтрации и обновление DataGrid
+            FinanceGrid.ItemsSource = TB.ToList();
+
+            // Выполнение пересчета и обновление сумм
+            UpdateSummary();
         }
     }
 }

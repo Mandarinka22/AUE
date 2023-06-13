@@ -1,0 +1,23 @@
+﻿<Window x:Class="DimplomApp.AddingWindows.AddExpenses"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DimplomApp"
+        mc:Ignorable="d"
+        Title="AddExpenses" Height="400" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <local:NullableDateTimeConverter x:Key="NullableDateTimeConverter" />
+    </Window.Resources>
+    <Grid Background="#666666">
+        <Button Content="Добавить" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,300,0,0" Height="39" Width="160"  Foreground="White" Background="#FF5D5B5B" BorderBrush="Black" FontSize="14" Click="Add_Click"/>
+        <TextBox HorizontalAlignment="Left" Margin="231,100,0,0" TextWrapping="Wrap" Text="{Binding Date_expenses, Converter={StaticResource NullableDateTimeConverter}, FallbackValue={x:Null}}" VerticalAlignment="Top" Width="160" FontSize="14" Height="27"/>
+        <TextBox HorizontalAlignment="Left" Margin="231,159,0,0" TextWrapping="Wrap" Text="{Binding Sum}" VerticalAlignment="Top" Width="160" FontSize="14" Height="27"/>
+        <TextBox HorizontalAlignment="Left" Margin="231,217,0,0" TextWrapping="Wrap" Text="{Binding Description}" VerticalAlignment="Top" Width="160" FontSize="14" Height="27"/>
+        <Label Content="Дата" HorizontalAlignment="Left" Margin="166,96,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Label Content="Стоимость" HorizontalAlignment="Left" Margin="137,155,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Label Content="Описание" HorizontalAlignment="Left" Margin="139,213,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Label Content="Добавить трату" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" Foreground="White" FontSize="24"/>
+
+    </Grid>
+</Window>

@@ -39,6 +39,7 @@
             <DatePicker x:Name="StartDatePicker" Margin="5 -155 5 0" SelectedDateChanged="DatePicker_SelectedDateChanged" FontSize="16" Height="27"/>
             <TextBlock Text="End Date:" VerticalAlignment="Center" Margin="5 -155 5 0" Foreground="White" FontSize="16"/>
             <DatePicker x:Name="EndDatePicker" Margin="5 -155 5 0" SelectedDateChanged="DatePicker_SelectedDateChanged" FontSize="16" Height="27"/>
+            <Button x:Name="ClearDatePicker" Content="Очистить" Height="30" Background="#666666" Foreground="White" FontSize="16" Margin="-130, 0, 0, 30" Click="ClearDatePicker_Click"/>
         </StackPanel>
 
         <Label Content="Отчет" Foreground="White" HorizontalAlignment="Left" Margin="16,2,0,0" VerticalAlignment="Top" FontSize="18" FontStyle="Italic"/>

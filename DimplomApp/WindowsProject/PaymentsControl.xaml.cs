@@ -32,6 +32,30 @@ namespace DimplomApp.WindowsProject
 
             var payments = DB.Payments.ToList();
 
+
+            // Получите список всех услуг из таблицы Services_client
+            var services = DB.Services_client.ToList();
+
+            // Получите список новых услуг, которых нет в таблице Payments
+            var newServices = services.Where(s => !payments.Any(p => p.ServicesID == s.ID)).ToList();
+
+            // Добавьте новые услуги в таблицу Payments
+            foreach (var service in newServices)
+            {
+                var newPayment = new Payments
+                {
+                    ServicesID = service.ID
+                };
+
+                DB.Payments.Add(newPayment);
+            }
+
+            // Сохраните изменения в базе данных
+            DB.SaveChanges();
+
+            // Обновите источник данных для TableGrid, чтобы отобразить новые услуги
+            TableGrid.ItemsSource = DB.Payments.ToList();
+
             foreach (var payment in payments)
             {
                 // Находим все документы, связанные с услугой данного платежа
@@ -60,6 +84,7 @@ namespace DimplomApp.WindowsProject
             DB.SaveChanges();
 
             TableGrid.ItemsSource = payments;
+
         }
         private void refreshdatagrid()
         {
@@ -100,6 +125,11 @@ namespace DimplomApp.WindowsProject
                 }
             }
             
+        }
+
+        private void UpdateBtn_Click(object sender, RoutedEventArgs e)
+        {
+            refreshdatagrid();
         }
     }
 }

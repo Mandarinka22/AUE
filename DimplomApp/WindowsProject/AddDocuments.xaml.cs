@@ -25,6 +25,7 @@ namespace DimplomApp.WindowsProject
         DiplomaEntities DB;
         private Notaries selectedNotary;
         private int selectedPriceID;
+        public int SelectedServiceID;
 
         public AddDocuments(DiplomaEntities DB, Documents Table)
         {
@@ -42,6 +43,9 @@ namespace DimplomApp.WindowsProject
 
             // Установить идентификатор услуги в свойство PriceID вашего объекта Documents
             ((Documents)this.DataContext).PriceID = selectedPriceID;
+
+            // Установить идентификатор услуги в свойство PriceID вашего объекта Documents
+            ((Documents)this.DataContext).Services = SelectedServiceID;
 
             DB.SaveChanges();
             MessageBox.Show("Документ успешно добавлен!", "Уведомление");
@@ -78,6 +82,21 @@ namespace DimplomApp.WindowsProject
 
                 // Установить идентификатор услуги в TextBox
                 SelectPrice.Text = selectedPriceID.ToString();
+            }
+        }
+        private void SelectService_PWD(object sender, MouseButtonEventArgs e)
+        {
+            // Открыть окно выбора услуги из таблицы Price_list
+            ServiceSelectionForm serviceForm = new ServiceSelectionForm(DB);
+            bool? result = serviceForm.ShowDialog();
+
+            if (result == true)
+            {
+                // Получить выбранный идентификатор услуги
+                SelectedServiceID = serviceForm.SelectedServiceID;
+
+                // Установить идентификатор услуги в TextBox
+                SelectService.Text = SelectedServiceID.ToString();
             }
         }
 

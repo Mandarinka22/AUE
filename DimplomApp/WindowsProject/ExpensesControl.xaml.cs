@@ -1,4 +1,5 @@
-﻿using DimplomApp.DataBase;
+﻿using DimplomApp.AddingWindows;
+using DimplomApp.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,10 +31,19 @@ namespace DimplomApp.WindowsProject
             TB = DB.Expenses.ToList();
             TableGrid.ItemsSource = TB;
         }
+        private void refreshdatagrid()
+        {
+            TableGrid.ItemsSource = DB.Expenses.ToList();
+            TableGrid.Items.Refresh();
+        }
 
         private void AddExpenses_Click(object sender, RoutedEventArgs e)
         {
-
+            var AE = new Expenses();
+            DB.Expenses.Add(AE);
+            AddExpenses NewExpenses = new AddExpenses(DB, AE);
+            NewExpenses.ShowDialog();
+            refreshdatagrid();
         }
     }
 }

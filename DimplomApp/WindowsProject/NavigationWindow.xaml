@@ -17,6 +17,7 @@
             <Button x:Name="WindowExpenses" Content="Затраты" Height="27" Width="183" Margin="0,20,0,0" FontSize="16" Background="#666666" Foreground="White" Click="WindowExpenses_Click"/>
             <Button x:Name="WindowPayments" Content="Платежи" Height="27" Width="183" Margin="0,20,0,0" FontSize="16" Background="#666666" Foreground="White" Click="WindowPayments_Click"/>
             <Button x:Name="WindowFinance" Content="Отчет" Height="27" Width="183" Margin="0,20,0,0" FontSize="16" Background="#666666" Foreground="White" Click="WindowFinance_Click"/>
+            <Button x:Name="WindowExit" Content="Выход" Height="27" Width="140" Margin="0,130,0,0" FontSize="16" Background="#666666" Foreground="White" Click="WindowExit_Click"/>
         </StackPanel>
         <Grid Grid.Row="1">
             <Frame x:Name="Frame" Margin="237,10,10,10" />

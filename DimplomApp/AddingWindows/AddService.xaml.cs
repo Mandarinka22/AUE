@@ -52,7 +52,12 @@ namespace DimplomApp.AddingWindows
                 // Установка значения ID выбранного клиента в TextBox
                 ClientID.Text = selectedClient.ID_client.ToString();
 
+                ((Services_client)this.DataContext).ClientID = selectedClient.ID_client;
+
                 Client.Visibility= Visibility.Visible;
+
+                ClientID.Visibility= Visibility.Visible;
+
 
                 // Установка значения имени и фамилии выбранного клиента в TextBlock
                 Client.Text = $"{selectedClient.First_name} {selectedClient.Last_name}";

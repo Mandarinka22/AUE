@@ -22,15 +22,31 @@ namespace DimplomApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private DiplomaEntities DB;
         public MainWindow()
         {
             InitializeComponent();
+            DB = new DiplomaEntities();
         }
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            DimplomApp.WindowsProject.NavigationWindow NW = new DimplomApp.WindowsProject.NavigationWindow();
-            NW.Show();
+            string username = LoginTextBox.Text;
+            string password = PasswordTextBox.Password;
+
+            // Проверка существования пользователя с указанным логином и паролем
+            var user = DB.Authorization.FirstOrDefault(a => a.Login == username && a.Password == password);
+            if (user != null)
+            {
+                // Открытие главного окна при успешной авторизации
+                DimplomApp.WindowsProject.NavigationWindow NW = new DimplomApp.WindowsProject.NavigationWindow();
+                NW.Show();
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Неверные учетные данные. Попробуйте еще раз.", "Ошибка авторизации", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

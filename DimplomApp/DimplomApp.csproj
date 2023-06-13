@@ -67,6 +67,9 @@
     <Compile Include="AddingWindows\AddClients.xaml.cs">
       <DependentUpon>AddClients.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddingWindows\AddExpenses.xaml.cs">
+      <DependentUpon>AddExpenses.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddingWindows\AddNotary.xaml.cs">
       <DependentUpon>AddNotary.xaml</DependentUpon>
     </Compile>
@@ -79,6 +82,10 @@
     <Compile Include="AddingWindows\PriceSelectionForm.xaml.cs">
       <DependentUpon>PriceSelectionForm.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddingWindows\ServiceSelectionForm.xaml.cs">
+      <DependentUpon>ServiceSelectionForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DateTimeConverter.cs" />
     <Compile Include="WindowsProject\AddDocuments.xaml.cs">
       <DependentUpon>AddDocuments.xaml</DependentUpon>
     </Compile>
@@ -119,6 +126,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="AddingWindows\AddExpenses.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AddingWindows\AddNotary.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -132,6 +143,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddingWindows\PriceSelectionForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddingWindows\ServiceSelectionForm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

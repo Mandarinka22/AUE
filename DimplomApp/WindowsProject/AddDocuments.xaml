@@ -3,22 +3,25 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DimplomApp.WindowsProject"
+        xmlns:local="clr-namespace:DimplomApp"
         mc:Ignorable="d"
         Title="AddDocuments" Height="450" Width="550" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <local:NullableDateTimeConverter x:Key="NullableDateTimeConverter" />
+    </Window.Resources>
     <Grid Background="#666666">
         <Button Content="Добавить" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,330,0,0" Height="39" Width="160"  Foreground="White" Background="#FF5D5B5B" BorderBrush="Black" FontSize="14" Click="Add_Click"/>
-        <TextBox x:Name="Date" HorizontalAlignment="Left" Margin="236,100,0,0" TextWrapping="Wrap" Text="{Binding Date,StringFormat='dd.MM.yyyy'}" VerticalAlignment="Top" Width="160" FontSize="14" Height="27"/>
+        <TextBox x:Name="Date" HorizontalAlignment="Left" Margin="236,100,0,0" TextWrapping="Wrap" Text="{Binding Date,Converter={StaticResource NullableDateTimeConverter}, FallbackValue={x:Null}}" VerticalAlignment="Top" Width="160" FontSize="14" Height="27"/>
         <TextBox x:Name="SelectNotary" PreviewMouseDown="SelectNotary_PWD" IsReadOnly="True" HorizontalAlignment="Left" Margin="236,150,0,0" TextWrapping="Wrap" Text="{Binding NotaryID}" VerticalAlignment="Top" Width="160" FontSize="14" Height="29" TextChanged="SelectNotary_TextChanged"/>
         <TextBox x:Name="SelectPrice" PreviewMouseDown="SelectPrice_PWD" IsReadOnly="True" HorizontalAlignment="Left" Margin="236,200,0,0" TextWrapping="Wrap" Text="{Binding PriceID}" VerticalAlignment="Top" Width="160" FontSize="14" Height="29" TextChanged="SelectNotary_TextChanged"/>
-        <TextBox HorizontalAlignment="Left" Margin="236,250,0,0" TextWrapping="Wrap" Text="{Binding Services}" VerticalAlignment="Top" Width="160" FontSize="14" Height="29"/>
-        <Label Content="Дата" HorizontalAlignment="Left" Margin="100,100,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <Label Content="Нотариус" HorizontalAlignment="Left" Margin="70,150,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <Label Content="Документ" HorizontalAlignment="Left" Margin="100,200,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
-        <Label Content="Услуга №" HorizontalAlignment="Left" Margin="90,250,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <TextBox x:Name="SelectService" PreviewMouseDown="SelectService_PWD" HorizontalAlignment="Left" Margin="236,250,0,0" TextWrapping="Wrap" Text="{Binding Services}" VerticalAlignment="Top" Width="160" FontSize="14" Height="29"/>
+        <Label Content="Дата" HorizontalAlignment="Left" Margin="165,98,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Label Content="Нотариус" HorizontalAlignment="Left" Margin="130,150,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Label Content="Документ" HorizontalAlignment="Left" Margin="130,200,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
+        <Label Content="Услуга №" HorizontalAlignment="Left" Margin="130,250,0,0" VerticalAlignment="Top" Foreground="White" FontSize="16"/>
         <Label Content="Добавить документ" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" Foreground="White" FontSize="24"/>
-        
-       
+
+
 
     </Grid>
 </Window>

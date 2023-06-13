@@ -70,5 +70,10 @@ namespace DimplomApp.WindowsProject
             Label.Visibility = Visibility.Collapsed;
             Frame.Navigate(new FinanceControl());
         }
+
+        private void WindowExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

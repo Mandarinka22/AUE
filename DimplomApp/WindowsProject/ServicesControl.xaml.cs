@@ -30,6 +30,7 @@ namespace DimplomApp.WindowsProject
             DB = new DiplomaEntities();
             TB = DB.Services_client.ToList();
             TableGrid.ItemsSource = TB;
+            refreshdatagrid();
         }
 
         private void refreshdatagrid()
